@@ -26,5 +26,7 @@ hs_err_pid*
 .gitignore
 .idea/inspectionProfiles/
 .idea/vcs.xml
-src/test/
 target/generated-sources/
+.idea
+*.iml
+target/
