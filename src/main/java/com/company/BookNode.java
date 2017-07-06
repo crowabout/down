@@ -1,13 +1,8 @@
 package com.company;
-
-import com.sun.javafx.beans.IDProperty;
 import org.hibernate.envers.Audited;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  * Created by pc on 2017/7/1.
  */
@@ -16,12 +11,26 @@ public class BookNode {
     @Id
     @GeneratedValue
     private int id;
+    /**
+     * 文件名
+     */
     @Audited
     private String bookName;
+
+    /**
+     * 文件大小
+     */
     @Audited
     private String fileSize;
+    /**
+     * 上传时间
+     */
     @Audited
     private String uploadTime;
+
+    /**
+     * 相对的url
+     */
     @Audited
     private String relaUrl;
     /**
@@ -29,6 +38,20 @@ public class BookNode {
      */
     @Audited
     private String fileType;
+
+    /**
+     * 目录还是文件
+     */
+    @Audited
+    private String dirOrFile;
+
+    public String getDirOrFile() {
+        return dirOrFile;
+    }
+
+    public void setDirOrFile(String dirOrFile) {
+        this.dirOrFile = dirOrFile;
+    }
 
     public int getId() {
         return id;
