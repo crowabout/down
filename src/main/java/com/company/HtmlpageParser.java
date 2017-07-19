@@ -1,4 +1,5 @@
 package com.company;
+import jdk.nashorn.internal.ir.Block;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,6 +8,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
@@ -93,7 +95,6 @@ public class HtmlpageParser {
 
     }
 
-
     /**
      * exact Tag from html
      * @param htmlPage
@@ -128,7 +129,6 @@ public class HtmlpageParser {
 
 
     public static void main(String[] args) {
-
 
         String urlStr ="http://linux.linuxidc.com/index.php";
         BlockingQueue<GraphNode> queue =new LinkedBlockingQueue<GraphNode>();
