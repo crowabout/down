@@ -1,6 +1,8 @@
 package com.company.net;
 
 import com.sun.corba.se.impl.encoding.ByteBufferWithInfo;
+import com.sun.org.apache.xml.internal.utils.ThreadControllerWrapper;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_GREENPeer;
 import org.hibernate.result.Output;
 
 import javax.print.DocFlavor;
@@ -36,10 +38,17 @@ public class TEst {
 
 
 
-        test2();
+//        socketTest();
+
+        try {
+            socketChannelTEst();
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void test2(){
+    private static void socketTest(){
 
         String host ="www.sina.com.cn";
         try {
@@ -82,7 +91,7 @@ public class TEst {
     }
 
 
-    private void test1(){
+    private void URLConnection(){
 
         try {
             URL url  =new URL("http://www.sina.com");
@@ -110,6 +119,82 @@ public class TEst {
 
     }
 
+    public static void socketChannelTEst() throws UnknownHostException {
+
+
+        String host="www.baidu.com";
+        int port=80;
+        InetSocketAddress i4Addr =new InetSocketAddress(host,port);
+
+        try {
+//            SocketChannel sc =
+//                    SocketChannel.open(new InetSocketAddress(host,port));
+            SocketChannel sc =
+                    SocketChannel.open();
+            sc.connect(i4Addr);
+            sc.configureBlocking(false);
+
+            while(!sc.finishConnect()){
+                System.out.println("connection is progressing...");
+                Thread.currentThread().sleep(200);
+            }
+
+            System.out.println("conneccted......");
+
+
+            String greeting="GET / HTTP/1.1\r\nhost:"+host+"\r\n\r\n";
+            int size =1024;
+            ByteBuffer buffer =ByteBuffer.allocate(size);
+            buffer.put(greeting.getBytes());
+            buffer.flip();
+            sc.write(buffer);
+            buffer.clear();
+
+            OutputStreamWriter ow =new OutputStreamWriter(System.out,"UTF-8");
+            Writer writer =new BufferedWriter(ow);
+
+
+            int c=0;
+            while((c=sc.read(buffer))==0){
+                System.out.println("c:"+c);
+                Thread.currentThread().sleep(200);
+            }
+
+            do{
+                System.out.println("c:"+c);
+                writer.write(new String(buffer.array(),ow.getEncoding()));
+                buffer.clear();
+                c=sc.read(buffer);
+            }while (c!=0);
+
+
+            writer.flush();
+            writer.close();
+
+            sc.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    static byte[] drainBytes(ByteBuffer buffer){
+
+
+        byte[] b =new byte[buffer.capacity()];
+        int i=0;
+        while(buffer.hasRemaining()){
+            b[i]=buffer.get();
+            i++;
+        }
+        return b;
+    }
 
 }
 
