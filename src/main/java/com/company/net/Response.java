@@ -6,4 +6,6 @@ package com.company.net;
 public class Response {
 
 
+
+
 }
