@@ -21,7 +21,7 @@ public class HttpCallRunnable implements Callable<String> {
 
     public String call() throws Exception {
 
-        System.out.println("httpCall...begin");
+        System.out.println(Thread.currentThread().getName());
 
         if (url == null || url.equals(""))
             url=defaultHost;
@@ -36,6 +36,8 @@ public class HttpCallRunnable implements Callable<String> {
                 System.out.println(Thread.currentThread().getName());
                 byte[] buffer;
                 StringBuilder query = new StringBuilder("GET / HTTP/1.1").append("\r\n");
+                query.append("Accept-Charset").append("UTF-8\r\n");
+//                query.append("Accept-Encoding").append("UTF-8\r\n");
                 query.append("host:").append(url).append("\r\n\r\n");
                 buffer = query.toString().getBytes();
 
@@ -48,15 +50,17 @@ public class HttpCallRunnable implements Callable<String> {
                 //###################
                 Writer writer= new BufferedWriter(new OutputStreamWriter(System.out, "UTF-8"));
                 int c;
+                byte[] readBuffer =new byte[1024];
                 long start =System.currentTimeMillis();
-                while((c=in.read())!=-1){
-                    writer.write(c);
-                    writer.flush();
-                }
+//                while((c=in.read(readBuffer))!=-1){
+//                    System.out.println(String.format("\ncout:%d\n",c));
+//                    writer.write(readBuffer);
+//                    writer.flush();
+//                }
+                rqstContent=ByteUtil.string(in);
 
-                System.out.println(String.format("\n\n spendTime:%1$.2f",(System.currentTimeMillis()-start)/1000.0f));
-
-                in.close();
+                float duration=(System.currentTimeMillis()-start)/1000.0f;
+                System.out.println(String.format("\tspendTime:%1$.2f\t%2$s",duration,url));
                 //####################
 
                 return rqstContent;
