@@ -272,10 +272,12 @@ public class TEst {
 
     private static void execPool() {
 
-        String[] urls = {"www.sina.com.cn"};
+        String[] urls = {"www.linuxidc.com"
+//                "www.baidu.com"
+        };
 //                "www.sohu.com", "www.qq.com", "linux.linuxidc.com", "www.linuxidc.com"};
 
-        NodeList<FutureTask<String>> results = new NodeList<FutureTask<String>>();
+        final NodeList<FutureTask<String>> results = new NodeList<FutureTask<String>>();
         List<HttpCallRunnable> request = new ArrayList<HttpCallRunnable>();
         for (int i = 0; i < urls.length; i++) {
             request.add(new HttpCallRunnable(urls[i]));
@@ -286,30 +288,34 @@ public class TEst {
             results.add(result);
         }
 
-        while(!results.isEmpty()){
-            String s=null;
-            try
-            {
-                Node node =results.nextNode();
-                FutureTask<String> item = (FutureTask<String>) node.value();
+        new Thread(new Runnable() {
+            public void run() {
+                while(!results.isEmpty()){
+                    String s=null;
+                    try
+                    {
+                        Node node =results.nextNode();
+                        FutureTask<String> item = (FutureTask<String>) node.value();
 
 //                s=item.get(400,TimeUnit.MILLISECONDS);
-                s =item.get();
-                if(s!=null){
-                    System.out.println("s!=null "+ item.hashCode());
-//                    System.out.println(s.substring(0,20));
-                    results.remove(node);
+                        s =item.get();
+                        if(s!=null){
+//                            System.out.println(s);
+                            results.remove(node);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+
             }
-        }
+        }).start();
 
         pool.shutdown();
         int size = ((ThreadPoolExecutor) pool).getLargestPoolSize();
-        System.out.println(size);
+        System.out.println("\n==============\n"+size+"\n============\n");
 
     }
 
