@@ -31,3 +31,6 @@ target/generated-sources/
 *.iml
 target/
 src/test/
+.idea/misc.xml
+.idea/workspace.xml
+.idea/*
