@@ -1,10 +1,8 @@
 package com.company;
-import jdk.nashorn.internal.ir.Block;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,9 +23,9 @@ public class HtmlpageParser {
      */
     private int pageNodeCount;
 
-    private BlockingQueue<GraphNode> queue;
+    private Queue<GraphNode> queue;
 
-    public HtmlpageParser(URL rootUrl, BlockingQueue<GraphNode> queue) {
+    public HtmlpageParser(URL rootUrl, Queue<GraphNode> queue) {
 
         this.absoluteUrl =rootUrl;
         this.queue =queue;
@@ -71,7 +69,7 @@ public class HtmlpageParser {
      * extact Tag from HtmlFile which is requested from url;
      * @return
      */
-     int exactTrTagFromUrl() throws InterruptedException {
+     public int exactTrTagFromUrl() throws InterruptedException {
         try {
             Document doc =Jsoup.connect(absoluteUrl.toString()).get();
             Elements eles =doc.select(
@@ -81,7 +79,7 @@ public class HtmlpageParser {
 
             for (Element ele :eles) {
                 if(queue!=null){
-                    queue.put(convTrTag2GNode(ele));
+                    queue.offer(convTrTag2GNode(ele));
                     pageNodeCount++;
                 }else{
                     log.info("!!!queue is null!!!");
@@ -110,7 +108,7 @@ public class HtmlpageParser {
             for (Element ele :eles) {
                 GraphNode node =convTrTag2GNode(ele);
                 if(queue!=null){
-                    queue.put(node);
+                    queue.offer(node);
                     pageNodeCount++;
                 }else{
                     log.info("!!!queue is null!!!");

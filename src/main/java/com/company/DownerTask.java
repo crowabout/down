@@ -8,14 +8,15 @@ import java.util.concurrent.*;
  */
 public class DownerTask {
 
-    private final int SIZE_OF_THREED_POOL=10;
-    private final BlockingQueue<GraphNode> nodeQueue;
+    private final int SIZE_OF_THREED_POOL=100;
+    private final int SIZE_OF_QUEUE=1000;
+    private final Queue<GraphNode> nodeQueue;
     private final ExecutorService executor;
     private final CompletionService<GraphNode> service;
     private HtmlpageParser parser;
 
     public DownerTask(URL baseUrl) {
-        this.nodeQueue = new LinkedBlockingQueue<GraphNode>();
+        this.nodeQueue = new ConcurrentLinkedQueue<GraphNode>();
         parser =new HtmlpageParser(baseUrl,nodeQueue);
         executor =Executors.newFixedThreadPool(SIZE_OF_THREED_POOL);
         service =new ExecutorCompletionService<GraphNode>(executor);
@@ -32,7 +33,6 @@ public class DownerTask {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     private void down() {

@@ -272,18 +272,17 @@ public class TEst {
 
     private static void execPool() {
 
-        String[] urls = {"www.linuxidc.com"
-//                "www.baidu.com"
-        };
-//                "www.sohu.com", "www.qq.com", "linux.linuxidc.com", "www.linuxidc.com"};
+        String[] urls = {"http://www.linuxidc.com",
+                "http://www.baidu.com",
+                "http://www.sohu.com", "http://www.qq.com", "http://linux.linuxidc.com", "http://www.linuxidc.com"};
 
         final NodeList<FutureTask<String>> results = new NodeList<FutureTask<String>>();
-        List<HttpCallRunnable> request = new ArrayList<HttpCallRunnable>();
+        List<HttpCallRunable> request = new ArrayList<HttpCallRunable>();
         for (int i = 0; i < urls.length; i++) {
-            request.add(new HttpCallRunnable(urls[i]));
+            request.add(new HttpCallRunable(urls[i]));
         }
         ExecutorService pool = Executors.newFixedThreadPool(100);
-        for (HttpCallRunnable item : request) {
+        for (HttpCallRunable item : request) {
             FutureTask<String> result = (FutureTask<String>) pool.submit(item);
             results.add(result);
         }
@@ -300,7 +299,7 @@ public class TEst {
 //                s=item.get(400,TimeUnit.MILLISECONDS);
                         s =item.get();
                         if(s!=null){
-//                            System.out.println(s);
+                            System.out.println(s);
                             results.remove(node);
                         }
                     } catch (InterruptedException e) {

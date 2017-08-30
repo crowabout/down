@@ -1,12 +1,21 @@
 package com.company;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by pc on 2017/7/6.
  */
 public class TextUtils {
 
+    private static Logger log = Logger.getLogger(TextUtils.class.getName());
 
     private static List<String> suffixs =new ArrayList<String>();
     static {
@@ -59,5 +68,36 @@ public class TextUtils {
         System.out.println(b);
     }
     */
+   public static String convert2Str(InputStream in, Charset charset){
+       BufferedReader reader = new BufferedReader(new InputStreamReader(in,charset));
+       StringBuilder sb = new StringBuilder();
+       String line = null;
+       try {
+           while ((line = reader.readLine()) != null) {
+               sb.append(line+"\r\n");
+           }
+       } catch (IOException e) {
+           e.printStackTrace();
+       } finally {
+           try {
+               in.close();
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+       return sb.toString();
+   }
 
+
+    public static Charset toCharSet(String contentType) {
+        Pattern p = Pattern.compile(".*charset=.*");
+        Matcher matcher=p.matcher(contentType);
+        if(matcher.matches()){
+            String charsetStr =
+                    contentType.substring(contentType.indexOf("=")+1,contentType.length());
+            log.info("charset:"+charsetStr);
+            return Charset.forName(charsetStr);
+        }
+        return null;
+    }
 }

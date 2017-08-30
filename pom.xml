@@ -8,14 +8,13 @@
     <artifactId>Downer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
     <dependencies>
-        <dependency>
-            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.10.3</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--&lt;!&ndash; jsoup HTML parser library @ https://jsoup.org/ &ndash;&gt;-->
+            <!--<groupId>org.jsoup</groupId>-->
+            <!--<artifactId>jsoup</artifactId>-->
+            <!--<version>1.10.3</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>

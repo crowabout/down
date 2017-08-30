@@ -25,9 +25,16 @@
  *
  */
 package com.company.test;
+import java.io.*;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.concurrent.Future;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.company.TextUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -40,6 +47,8 @@ import org.apache.http.impl.nio.client.HttpAsyncClients;
  */
 public class AsyncClientHttpExchange {
 
+    private static Logger log =Logger.getLogger(AsyncClientHttpExchange.class.getName());
+
     public static void main(final String[] args) throws Exception {
         CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
         try {
@@ -51,18 +60,23 @@ public class AsyncClientHttpExchange {
             System.out.println(Arrays.toString(response.getHeaders("Content-Type")));
 
             HttpEntity entity =response.getEntity();
+
             System.out.println(String.format("%s:%s\n",entity.getContentType().getName(),
                     entity.getContentType().getValue()));
+
+
             if(entity.isStreaming()){
                 System.out.println(String.format("reponse.isStream()=%s\n",true));
+                String str = TextUtils.convert2Str(entity.getContent(),
+                        TextUtils.toCharSet(entity.getContentType().getValue()));
+                log.info(str);
             }
-
-
             System.out.println("Shutting down");
         } finally {
             httpclient.close();
         }
         System.out.println("Done");
     }
+
 
 }
