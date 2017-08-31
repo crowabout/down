@@ -32,6 +32,14 @@ public class TextUtils {
         suffixs.add(".png");
         suffixs.add(".jpeg");
         suffixs.add(".jpg");
+        suffixs.add(".exe");
+        suffixs.add(".sign");
+        suffixs.add(".apk");
+        suffixs.add(".doc");
+        suffixs.add(".docx");
+        suffixs.add(".xls");
+        suffixs.add(".rpm");
+        suffixs.add(".deb");
     }
 
 

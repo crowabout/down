@@ -8,9 +8,7 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="ConsolePU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.company.Address</class>
-        <class>com.company.Person</class>
-        <class>com.company.BookNode</class>
+        <class>com.company.GraphNode</class>
         <exclude-unlisted-classes />
         <properties>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
@@ -26,15 +24,17 @@
             <property name="hibernate.connection.password" value=""/>-->
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+            <!--utf-8-->
             <!--<property name="hibernate.connection.url" value="jdbc:mysql:///hibernate_tests?useUnicode=true&amp;characterEncoding=UTF-8"/>-->
+            <!--GBK-->
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3307/linuxidc?characterEncoding=UTF-8"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.connection.username" value="root"/>
             <property name="hibernate.connection.password" value="swan"/>
 
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
 
         </properties>
     </persistence-unit>

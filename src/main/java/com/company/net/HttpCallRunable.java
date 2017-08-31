@@ -24,6 +24,7 @@ public class HttpCallRunable implements Callable<String> {
         httpClient= HttpAsyncClients.createDefault();
     }
     public String call() throws Exception {
+        log.info(String.format("%s,%s",Thread.currentThread().getName(),url));
         httpClient.start();
        try{
            HttpGet requset =new HttpGet(url);
