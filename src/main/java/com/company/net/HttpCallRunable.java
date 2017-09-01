@@ -16,7 +16,6 @@ public class HttpCallRunable implements Callable<String> {
 
     private Logger log = Logger.getLogger("httpCallRunnable");
     private String url;
-    private final String defaultHost="http://www.baidu.com";
     private String html="";
     private CloseableHttpAsyncClient httpClient;
     public HttpCallRunable(String url) {

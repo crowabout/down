@@ -134,7 +134,16 @@ public class HtmlpageParser {
      */
     private String exactIndexFromDoc(Document doc){
 
-        Element tdEle=doc.select("td[valign='top'] table:eq(0) tr").get(0);
+//        Element tdEle=doc.select("td[valign='top'] table:eq(0) tr").get(0);
+
+        Elements tdEles =doc.select("td[valign='top'] table:eq(0) tr");
+        if(tdEles.size()==0){
+            log.warning("============================");
+            log.warning(doc.toString());
+            log.warning("============================");
+        }
+
+        Element tdEle =tdEles.get(0);
         Elements aEles =tdEle.select("tr a");
         int size =aEles.size();
         StringBuilder builder =new StringBuilder();

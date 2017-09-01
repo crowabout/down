@@ -103,7 +103,7 @@ public class TextUtils {
         if(matcher.matches()){
             String charsetStr =
                     contentType.substring(contentType.indexOf("=")+1,contentType.length());
-            log.info("charset:"+charsetStr);
+//            log.info("charset:"+charsetStr);
             return Charset.forName(charsetStr);
         }
         return null;
