@@ -186,14 +186,18 @@ public class GraphNode {
      */
     public boolean isLeafNode() {
 
-
         //suffix end of the fileName
-        boolean bNodeName = TextUtils.suffixIn(nodeName);
+//        boolean bNodeName = TextUtils.suffixIn(nodeName);
         //and the attribute of size
         Pattern p = Pattern.compile("\\d*.{0,1}\\d*\\s*[GgMmKkTt]{0,1}[Bb]");
         Matcher m = p.matcher(fileSize.trim());
         boolean bfileSize = m.matches();
-        return bfileSize && bNodeName;
+
+        //文件有大小,文件名不应定匹配
+        if(bfileSize){
+            return bfileSize;
+        }
+        return false;
     }
 
     @Override

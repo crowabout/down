@@ -6,9 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 /**
@@ -18,15 +19,20 @@ public class DefaultTask {
 
     private Logger log = Logger.getLogger("DownTask");
 
-    private static final int SIZE_OF_POOL=100;
+    private static final int SIZE_OF_POOL=200;
+    private static final int SIZE_OF_QUEUE=4000;
+
     private HtmlpageParser parser;
-    private ConcurrentLinkedQueue<GraphNode> queue;
+    private Queue<GraphNode> queue;
     private ExecutorService pool;
-    private EntityManager manager;
     private String url;
-    public DefaultTask(String baseUrl, EntityManager manager) {
-        this.manager=manager;
-        queue=new ConcurrentLinkedQueue<GraphNode>();
+    private DataSaver saver;
+
+    private final int THREADS_AMOUNT=200;
+
+    public DefaultTask(String baseUrl,DataSaver saver) {
+        this.saver=saver;
+        queue=new LinkedBlockingQueue<GraphNode>(SIZE_OF_QUEUE);
         parser=new HtmlpageParser(queue);
         pool = Executors.newFixedThreadPool(SIZE_OF_POOL);
         this.url=baseUrl;
@@ -46,21 +52,19 @@ public class DefaultTask {
     }
 
     private void startWorking(){
-
         initQueue(url);
-        ProducerOrConsumer poc =new ProducerOrConsumer(manager,pool,queue);
-        pool.execute(poc);
+        for(int i=0;i<THREADS_AMOUNT;i++){
+            ProducerOrConsumer poc =new ProducerOrConsumer(saver,queue);
+            pool.execute(poc);
+        }
     }
 
 
+
     public static void main(String[] args) {
-
-        Map<String, String> configurationOverrides = new HashMap<String, String>();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConsolePU", configurationOverrides);
-        EntityManager entityManager = emf.createEntityManager();
-        DefaultTask dfTask =new DefaultTask(Iidc.BASE,entityManager);
+        DataSaver saver =new DataSaver();
+        DefaultTask dfTask =new DefaultTask(Iidc.BASE,saver);
         dfTask.startWorking();
-
     }
 }
 

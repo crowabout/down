@@ -4,12 +4,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 /**
@@ -25,16 +21,16 @@ public class HtmlpageParser {
     private int pageNodeCount;
 
     private Queue<GraphNode> queue;
+    private GraphNode node;
 
+    public HtmlpageParser(){}
     public HtmlpageParser(Queue<GraphNode> queue) {
-//        this.absoluteUrl =rootUrl;
         this.queue =queue;
     }
 
-    public HtmlpageParser(GraphNode node) {
-        this.absoluteUrl =node.relUrl2abs();
+    public HtmlpageParser(GraphNode node){
+        this.node=node;
     }
-
 
     /**
      *
@@ -59,9 +55,6 @@ public class HtmlpageParser {
         GraphNode node =new GraphNode(text,href,fileSize);
         node.setUploadTime(time);
         node.setLeafNode(node.isLeafNode());
-
-//        log.info(text+" "+href +" "+fileSize+" "+time+"   "+node.isLeafNode());
-
         return node;
     }
 
@@ -70,7 +63,7 @@ public class HtmlpageParser {
      * extact Tag from url
      * @return
      */
-     public int exactTrTagFromUrl(URL url) throws InterruptedException {
+     public int exactTrTagFromUrl(URL url) throws InterruptedException,ClassCastException,IllegalArgumentException,NullPointerException {
          Document doc = null;
          try {
              doc = Jsoup.connect(url.toString()).get();
@@ -85,7 +78,7 @@ public class HtmlpageParser {
      * @param html
      * @return
      */
-    public int exactTrTagFromHtml(String html){
+    public int exactTrTagFromHtml (String html) throws IllegalArgumentException,ClassCastException,NullPointerException{
 
          if(html==null||html.equalsIgnoreCase("")){
              throw  new NullPointerException("html is null!");
@@ -101,11 +94,8 @@ public class HtmlpageParser {
      * @param doc
      * @return
      */
-    private int exactTrTagFromDoc(Document doc){
-        try {
-
+    private int exactTrTagFromDoc(Document doc)throws ClassCastException,IllegalArgumentException,NullPointerException{
             String index =exactIndexFromDoc(doc);
-
             Elements eles =doc.select(
                     "tr."+Iidc.TR_TAG_CLASS_FOLDER
                             +",tr."+Iidc.TR_TAG_CLASS_FILE_BG1
@@ -121,9 +111,6 @@ public class HtmlpageParser {
                         return pageNodeCount;
                     }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return pageNodeCount;
     }
 
@@ -139,7 +126,9 @@ public class HtmlpageParser {
         Elements tdEles =doc.select("td[valign='top'] table:eq(0) tr");
         if(tdEles.size()==0){
             log.warning("============================");
-            log.warning(doc.toString());
+            if(node!=null){
+                log.warning(String.format("%s\n%s",node.relUrl2abs().toString(),node.getCurPageIndex()));
+            }
             log.warning("============================");
         }
 
@@ -154,6 +143,10 @@ public class HtmlpageParser {
         return builder.toString();
     }
 
+
+    public void setCurNode(GraphNode node){
+       this.node=node;
+    }
 
     public static void main(String[] args) {
 

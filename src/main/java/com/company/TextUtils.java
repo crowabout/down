@@ -19,27 +19,59 @@ public class TextUtils {
 
     private static List<String> suffixs =new ArrayList<String>();
     static {
+
         suffixs.add(".pdf");
+        suffixs.add(".txt");
+
         suffixs.add(".zip");
         suffixs.add(".rar");
-        suffixs.add(".gz");
-        suffixs.add(".txt");
-        suffixs.add(".7z");
-        suffixs.add(".xz");
-        suffixs.add(".bz2");
-        suffixs.add(".jar");
         suffixs.add(".war");
+        suffixs.add(".tar");
+        suffixs.add(".gz");
+        suffixs.add(".7z");
+        suffixs.add(".bz2");
+        suffixs.add(".xz");
+        suffixs.add(".jar");
+        suffixs.add(".tgz");
+
         suffixs.add(".png");
         suffixs.add(".jpeg");
         suffixs.add(".jpg");
+        suffixs.add(".mp4");
+        suffixs.add(".mp3");
+
         suffixs.add(".exe");
-        suffixs.add(".sign");
-        suffixs.add(".apk");
         suffixs.add(".doc");
         suffixs.add(".docx");
+        suffixs.add(".ppt");
         suffixs.add(".xls");
+
         suffixs.add(".rpm");
         suffixs.add(".deb");
+        suffixs.add(".asc");
+        suffixs.add(".apk");
+        suffixs.add(".sign");
+
+        suffixs.add(".torrent");
+        suffixs.add(".iso");
+
+        suffixs.add(".h");
+        suffixs.add(".c");
+        suffixs.add(".cpp");
+        suffixs.add(".cs");
+
+        suffixs.add(".py");
+        suffixs.add(".sh");
+        suffixs.add(".lzma");
+        suffixs.add(".lz");
+        suffixs.add(".sql");
+        suffixs.add(".pl");
+
+        suffixs.add(".lnk");
+        suffixs.add(".svg");
+        suffixs.add(".chm");
+        suffixs.add(".xml");
+
     }
 
 
