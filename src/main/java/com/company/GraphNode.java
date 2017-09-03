@@ -1,9 +1,5 @@
 package com.company;
 
-import com.sun.javafx.beans.IDProperty;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

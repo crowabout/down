@@ -55,6 +55,7 @@ public class HtmlpageParser {
         GraphNode node =new GraphNode(text,href,fileSize);
         node.setUploadTime(time);
         node.setLeafNode(node.isLeafNode());
+        node.setFileType(node.getFileType());
         return node;
     }
 
@@ -124,14 +125,6 @@ public class HtmlpageParser {
 //        Element tdEle=doc.select("td[valign='top'] table:eq(0) tr").get(0);
 
         Elements tdEles =doc.select("td[valign='top'] table:eq(0) tr");
-        if(tdEles.size()==0){
-            log.warning("============================");
-            if(node!=null){
-                log.warning(String.format("%s\n%s",node.relUrl2abs().toString(),node.getCurPageIndex()));
-            }
-            log.warning("============================");
-        }
-
         Element tdEle =tdEles.get(0);
         Elements aEles =tdEle.select("tr a");
         int size =aEles.size();
