@@ -1,6 +1,7 @@
 package com.company;
 
 import javafx.util.Builder;
+import sun.reflect.generics.tree.FieldTypeSignature;
 
 import javax.swing.plaf.ButtonUI;
 
@@ -49,7 +50,7 @@ public class DownerConfigure {
         private String downLoadFileType;
         private int sizeOfThread;
         public Builder(){
-           fileDownloadDir="/home/swan/Download/Down/";
+           fileDownloadDir="down/";
            sizeOfThreadPool=100;
            logLevel="info";
            downLoadFileType="pdf";

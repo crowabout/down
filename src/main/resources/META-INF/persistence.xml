@@ -6,7 +6,7 @@
   ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
   -->
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
-    <persistence-unit name="ConsolePU">
+    <persistence-unit name="Downer">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.company.GraphNode</class>
         <exclude-unlisted-classes />
