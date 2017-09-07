@@ -1,8 +1,5 @@
 package com.company;
 
-import javafx.scene.chart.PieChart;
-import sun.reflect.generics.tree.FieldTypeSignature;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -67,12 +64,12 @@ public class DataSaver {
     }
 
 
-    public static void main(String[] args) {
-        DataSaver saver =new DataSaver();
-//        List<GraphNode> nodes =saver.queryAllGraphNodeByFileTypeAndKey("android", DefaultTask.FileType.PDF);
-//        System.out.println(nodes.size());
-//        List<GraphNode> nodes2 =saver.queryGraphNodeByFileType(DefaultTask.FileType.PDF,1);
-//        System.out.println(saver.countByFileType(DefaultTask.FileType.PDF));
-    }
+//    public static void main(String[] args) {
+//        DataSaver saver =new DataSaver();
+////        List<GraphNode> nodes =saver.queryAllGraphNodeByFileTypeAndKey("android", DefaultTask.FileType.PDF);
+////        System.out.println(nodes.size());
+////        List<GraphNode> nodes2 =saver.queryGraphNodeByFileType(DefaultTask.FileType.PDF,1);
+////        System.out.println(saver.countByFileType(DefaultTask.FileType.PDF));
+//    }
 
 }

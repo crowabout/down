@@ -1,5 +1,4 @@
 package com.company;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
  * Created by pc on 2017/7/5.
  */
@@ -39,15 +37,15 @@ public class GraphNode {
     private String fileSize;
 
     /**
-     * 上传时间
+     * upload time
      */
     private String uploadTime;
     /**
-     * 文件类型
+     * type of file
      */
     private String fileType;
     /**
-     * 目录还是文件
+     * dir or file
      */
     private String dirOrFile;
 
@@ -60,7 +58,7 @@ public class GraphNode {
     }
 
     /**
-     * 当前页面所在的索引页
+     *the directory index about current page
      */
     private String curPageIndex;
 
@@ -189,7 +187,7 @@ public class GraphNode {
         Matcher m = p.matcher(fileSize.trim());
         boolean bfileSize = m.matches();
 
-        //文件有大小,文件名不应定匹配
+        //there is no suffix about the file Name but have size
         if(bfileSize){
             return bfileSize;
         }
@@ -200,23 +198,5 @@ public class GraphNode {
     public String toString() {
         return String.format("[%s %s %s %s %s %s]", nodeName, fileSize, relUrl, isLeafNode(), uploadTime, curPageIndex);
     }
-
-
-//    public static void main(String[] args) {
-//
-//
-//        GraphNode node = new GraphNode("Android SDK 2.2 + Eclipse开发环境图文详解.pdf",
-//                "http://www.com", "1.50 MB ");
-//        boolean isLeaeNode =node.isLeafNode();
-//        System.out.println(isLeaeNode);
-////        String str = node.fileSize.trim();
-////        Pattern p = Pattern.compile("\\d*.{0,1}\\d*\\s*[GgMmKkTt]{0,1}[Bb]");
-////        Matcher match = p.matcher(str);
-////        System.out.println(match.matches());
-////        System.out.println(p.matcher("10.1KKB").matches());
-//
-//
-//    }
-
 
 }

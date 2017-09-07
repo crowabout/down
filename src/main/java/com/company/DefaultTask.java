@@ -1,5 +1,6 @@
 package com.company;
 import com.company.net.HttpDownloadTask;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -89,14 +90,14 @@ public class DefaultTask {
 
     private void showHelp(){
         System.out.println("\tdefaultTask (FILE|DATA) [option] \t");
-        System.out.println("\t[option]: DATA\t\t下载数据");
-        System.out.println("\t\t-h                   \t\t帮助.");
-        System.out.println("\t\t--thredPool-size=SIZE\t\t线程池的大小.");
-        System.out.println("\t\t--thredNum-size=SIZE\t\t初始化线程的个数.");
-        System.out.println("\t\t--queue-size=SIZE\t\t数据存放队列的大小.");
-        System.out.println("\t[option]: FILE\t\t下载文件");
-        System.out.println("\t\t--download-dir=DIR\t\t下载的文件要存放的目录.");
-        System.out.println("\t\t--download-type=TYPE\t\t数据存放队列的大小.");
+        System.out.println("\t[option]: DATA\t\t only download data");
+        System.out.println("\t\t-h                   \t\thelp manual.");
+        System.out.println("\t\t--thredPool-size=SIZE\t\tsize of thread pool.");
+        System.out.println("\t\t--thredNum-size=SIZE\t\tsize of thread.");
+        System.out.println("\t\t--queue-size=SIZE\t\tsize of queue.");
+        System.out.println("\t[option]: FILE\t\t file download");
+        System.out.println("\t\t--download-dir=DIR\t\tthe dir which store download files.");
+        System.out.println("\t\t--download-type=TYPE\t\tthe type of will download.");
         System.out.println("\t\t                    \t\ttype := (pdf|txt|doc|chm).");
     }
 
@@ -136,7 +137,6 @@ public class DefaultTask {
         }
 //        System.exit(0);
 
-//        dfTask.startWorking();
     }
 
 

@@ -436,7 +436,7 @@ public class TestConsole {
 
     public static void main(String[] args) {
         Map<String, String> configurationOverrides = new HashMap<String, String>();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConsolePU", configurationOverrides);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Downer", configurationOverrides);
         EntityManager entityManager = emf.createEntityManager();
 
 //        TestConsole console = new TestConsole(entityManager);

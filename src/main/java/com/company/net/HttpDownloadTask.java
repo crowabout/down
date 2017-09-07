@@ -8,17 +8,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
-
-
 /**
  * Created by pc on 2017/8/11.
  */
 public class HttpDownloadTask implements Runnable {
-
     private Logger log = Logger.getLogger("httpDownlaodTask");
     private CloseableHttpAsyncClient httpClient;
     private GraphNode node;
@@ -103,48 +98,4 @@ public class HttpDownloadTask implements Runnable {
         out.close();
         System.out.println(String.format("file %s download complete!",fileName.getAbsoluteFile().toString()));
     }
-
-
-//    public static void main(String[] args) {
-//
-//
-//        CountDownLatch counter =new CountDownLatch(5);
-//
-//        DownerConfigure configure =new DownerConfigure.Builder()
-//                .setDownloadDir("E:\\").build();
-//
-//        System.out.println(String.format("%s,%s,%s,%s",configure.downloadFielType(),
-//                configure.fileDownloadDir(),
-//                configure.sizeOfThread(),
-//                configure.sizeOfThreadPool()));
-//
-//        ExecutorService pool = Executors.newFixedThreadPool(10);
-//        GraphNode node =new GraphNode("基于Android的高效短信查询软件的实现.pdf","linuxconf/download.php?file=Li9saW51eGZpbGVzLzIwMTHE6tfKwc8vQW5kcm9pZMjrw8W9zLPMLyVCQiVGOSVEMyVEQUFuZHJvaWQlQjUlQzQlQjglREYlRDAlQTclQjYlQ0MlRDAlQzUlQjIlRTklRDElQUYlQzglRUQlQkMlRkUlQjUlQzQlQ0ElQjUlQ0YlRDYucGRm");
-//        GraphNode node1 =new GraphNode("制作Fedora 15的USB启动盘.pdf","linuxconf/download.php?file=Li9saW51eGZpbGVzL3B1Yi9GZWRvcmEvJUQ2JUM2JUQ3JUY3RmVkb3JhJTIwMTUlQjUlQzRVU0IlQzYlRjQlQjYlQUYlQzUlQ0MucGRm");
-//        GraphNode node2 =new GraphNode("在Red Hat Enterprise Linux 5.3安装RRDTool.pdf","linuxconf/download.php?file=Li9saW51eGZpbGVzL3B1Yi9SZWRIYXQvJUQ0JURBUmVkJTIwSGF0JTIwRW50ZXJwcmlzZSUyMExpbnV4JTIwNS4zJUIwJUIyJUQ3JUIwUlJEVG9vbC5wZGY=");
-//        GraphNode node3 =new GraphNode("2004-2013软考网络工程师历年试题答案及详解.pdf","linuxconf/download.php?file=Li9saW51eGZpbGVzL3B1Yi/I7b+8LzIwMDQtMjAxMyVDOCVFRCVCRiVCQyVDRCVGOCVDMiVFNyVCOSVBNCVCMyVDQyVDQSVBNiVDMCVGQSVDNCVFQSVDQSVENCVDQyVFMiVCNCVGMCVCMCVCOCVCQyVCMCVDRiVFQSVCRCVFMi5wZGY=");
-//        GraphNode node4 =new GraphNode("2004下半年－2009上半年试题及答案-(完整高清版).pdf","linuxconf/download.php?file=Li9saW51eGZpbGVzL3B1Yi/I7b+8LzIwMDQlQ0YlQzIlQjAlRUIlQzQlRUElQTMlQUQyMDA5JUM5JUNGJUIwJUVCJUM0JUVBJUNBJUQ0JUNDJUUyJUJDJUIwJUI0JUYwJUIwJUI4LSUyOCVDRCVFQSVENSVGQiVCOCVERiVDNyVFNSVCMCVFNiUyOS5wZGY=");
-//
-//        List<GraphNode> nodes=new ArrayList<GraphNode>();
-//        nodes.add(node1);
-//        nodes.add(node);
-//        nodes.add(node2);
-//        nodes.add(node3);
-//        nodes.add(node4);
-//        for (GraphNode item:
-//                nodes) {
-//           pool.submit(new HttpDownloadTask(item,configure,counter));
-//        }
-//
-//        try {
-//            counter.await();
-//            pool.shutdown();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
-
-
 }
