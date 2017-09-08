@@ -1,4 +1,5 @@
 package com.company.net;
+
 import com.company.DownerConfigure;
 import com.company.GraphNode;
 import org.apache.http.HttpEntity;
@@ -8,13 +9,17 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
+
 import java.io.*;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
+
 /**
  * Created by pc on 2017/8/11.
  */
-public class HttpDownloadTask implements Runnable {
+public class HttpDownloadTaskSyn {
     private static final int  READ_TIME_OUT =1*60*1000;
     private Logger log = Logger.getLogger("httpDownlaodTask");
     private CloseableHttpAsyncClient httpClient;
@@ -22,32 +27,25 @@ public class HttpDownloadTask implements Runnable {
     private DownerConfigure configure;
     private CountDownLatch counter;
 
-    public HttpDownloadTask(GraphNode node,DownerConfigure configure,CountDownLatch counter){
+    public HttpDownloadTaskSyn(GraphNode node, DownerConfigure configure, CountDownLatch counter){
         this(node,configure);
         this.counter =counter;
     }
-    public HttpDownloadTask(GraphNode node,DownerConfigure configure){
+    public HttpDownloadTaskSyn(GraphNode node, DownerConfigure configure){
         this(node);
         this.configure=configure;
     }
 
-    public HttpDownloadTask(GraphNode node) {
+    public HttpDownloadTaskSyn(GraphNode node) {
         this.node = node;
         httpClient = HttpAsyncClients.createDefault();
     }
-    public void run() {
+    public void execute() {
 
         System.out.println(String.format("%s downloading..%s",Thread.currentThread().getName(),node.getNodeName()));
         httpClient.start();
         try {
             HttpGet requset = new HttpGet(node.relUrl2abs().toString());
-            RequestConfig requestConfig=RequestConfig.custom()
-                    .setSocketTimeout(READ_TIME_OUT)
-                    .setConnectionRequestTimeout(READ_TIME_OUT)
-                    .setConnectTimeout(READ_TIME_OUT)
-                    .build();
-            requset.setConfig(requestConfig);
-
             Future<HttpResponse> future = httpClient
                     .execute(requset, null);
             HttpResponse response = null;
@@ -65,9 +63,6 @@ public class HttpDownloadTask implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(counter!=null){
-                counter.countDown();
-            }
             try {
                 httpClient.close();
             } catch (IOException e) {
