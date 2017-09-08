@@ -88,6 +88,14 @@ public class DefaultTask {
         }
     }
 
+
+    private void version(){
+
+        System.out.println("==========================");
+        System.out.println("downer version \"1.1.1\"");
+        System.out.println("Linuxidc File Downloader");
+        System.out.println("==========================");
+    }
     private void showHelp(){
         System.out.println("\tdefaultTask (FILE|DATA) [option] \t");
         System.out.println("\t[option]: DATA\t\t only download data");
@@ -99,14 +107,13 @@ public class DefaultTask {
         System.out.println("\t\t--download-dir=DIR\t\tthe dir which store download files.");
         System.out.println("\t\t--download-type=TYPE\t\tthe type of will download.");
         System.out.println("\t\t                    \t\ttype := (pdf|txt|doc|chm).");
+        System.out.println("\t\t --version          \t\t show version");
     }
 
 
     public static void main(String[] args) {
-
-
-
         DataSaver saver =new DataSaver();
+        DownerConfigure.Builder configureBuilder=new DownerConfigure.Builder();
         DefaultTask dfTask =new DefaultTask(Iidc.BASE,saver);
 
         if(args.length==0 || args[0].trim().equalsIgnoreCase("-h") ||
@@ -117,31 +124,40 @@ public class DefaultTask {
 
         int downLoadDirIndex=findKeyFromArgs("--download-dir",args);
         int downLoadTypeIndex =findKeyFromArgs("--download-type",args);
-        String dirPath =findOptionValueFromArgs(args[downLoadDirIndex]);
-        String fileType=findOptionValueFromArgs(args[downLoadTypeIndex]);
+        int versionIndex=findKeyFromArgs("--version",args);
 
 
-        DownerConfigure configure =new DownerConfigure.Builder()
-                .setDownloadDir(dirPath)
-                .downloadFileType(fileType)
-                .build();
+        if(downLoadDirIndex!=-1){
+            String dirPath =findOptionValueFromArgs(args[downLoadDirIndex]);
+            configureBuilder.setDownloadDir(dirPath);
+        }
+        if(downLoadTypeIndex!=-1){
+            String fileType=findOptionValueFromArgs(args[downLoadTypeIndex]);
+            configureBuilder.downloadFileType(fileType);
+        }
+
+        if(versionIndex!=-1){
+            dfTask.version();
+            System.exit(0);
+        }
 
         if(args[0].equalsIgnoreCase("FILE")){
             try {
-                dfTask.startDownloadFile(configure);
+                dfTask.startDownloadFile(configureBuilder.build());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }else if(args[0].equalsIgnoreCase("DATA")){
             dfTask.startDownLoadData();
+        }else{
+            System.exit(0);
         }
-//        System.exit(0);
 
     }
 
 
     private static int findKeyFromArgs(String key,String args[]){
-        int index=0;
+        int index=-1;
         for(int i=0;i<args.length;i++){
             if (args[i].contains(key)) {
                 index=i;

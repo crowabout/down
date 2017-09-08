@@ -49,11 +49,6 @@ public class HttpDownloadTask implements Runnable {
             } else {
                 log.info("!!Failure!!" + response.getStatusLine().getStatusCode() + " " + requset.getURI().toString());
             }
-
-            if(counter!=null){
-                counter.countDown();
-            }
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -61,6 +56,9 @@ public class HttpDownloadTask implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            if(counter!=null){
+                counter.countDown();
+            }
             try {
                 httpClient.close();
             } catch (IOException e) {

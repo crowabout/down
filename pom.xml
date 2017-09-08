@@ -11,6 +11,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.42</version>
+        </dependency>
+        <dependency>
             <!-- jsoup HTML parser library @ https://jsoup.org/ -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
@@ -50,54 +55,105 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.3</version>
                 <configuration>
-                    <excludes>
-                        <exclude>com/company/test/*</exclude>
-                    </excludes>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                     <archive>
                         <manifest>
                             <mainClass>com.company.DefaultTask</mainClass>
-                            <packageName>com.company</packageName>
-                            <!--<classpathPrefix>lib/</classpathPrefix>-->
-                            <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
-                    <!--<classesDirectory>${project.build.directory}</classesDirectory>-->
-                    <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
                 <executions>
                     <execution>
-                        <id>copy-dependencies</id>
+                        <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <excludeArtifactIds>junit</excludeArtifactIds>
-                            <excludeTransitive>false</excludeTransitive>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
         </plugins>
     </build>
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-jar-plugin</artifactId>-->
+                <!--<version>3.0.2</version>-->
+                <!--<configuration>-->
+                    <!--<excludes>-->
+                        <!--<exclude>com/company/test/*</exclude>-->
+                    <!--</excludes>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<mainClass>com.company.DefaultTask</mainClass>-->
+                            <!--<packageName>com.company</packageName>-->
+                            <!--&lt;!&ndash;<classpathPrefix>lib/</classpathPrefix>&ndash;&gt;-->
+                            <!--<addClasspath>true</addClasspath>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                    <!--&lt;!&ndash;<classesDirectory>${project.build.directory}</classesDirectory>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<outputDirectory>${project.build.directory}</outputDirectory>&ndash;&gt;-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<version>2.9</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-dependencies</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy-dependencies</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+                            <!--<excludeArtifactIds>junit</excludeArtifactIds>-->
+                            <!--<excludeTransitive>false</excludeTransitive>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-resources</id>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy-resources</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+                            <!--<resources>-->
+                                <!--<resource>-->
+                                    <!--<directory>lib/</directory>-->
+                                <!--</resource>-->
+                            <!--</resources>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-clean-plugin</artifactId>-->
+                <!--<version>2.5</version>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+
+
+
 
 </project>
