@@ -80,15 +80,34 @@ public class DefaultTask {
         List<GraphNode> nodes = saver.queryAllGraphNodeByFileTypeAndKey("", type);
         queue.addAll(nodes);
 
-        CountDownLatch latch = new CountDownLatch(queue.size());
         while (!queue.isEmpty()) {
             System.out.println(String.format("queue.size(%d)", queue.size()));
             GraphNode node = queue.remove();
-            HttpDownloadTaskSyn task = new HttpDownloadTaskSyn(node, configure, latch);
+            HttpDownloadTaskSyn task = new HttpDownloadTaskSyn(node, configure);
             task.execute();
         }
-        pool.shutdown();
+        System.exit(0);
     }
+
+
+    private void startDownloadFileAsyn(DownerConfigure configure) {
+
+        String type = configure.downloadFielType();
+        List<GraphNode> nodes = saver.queryAllGraphNodeByFileTypeAndKey("", type);
+        queue.addAll(nodes);
+
+        while (!queue.isEmpty()) {
+            System.out.println(String.format("queue.size(%d)", queue.size()));
+            GraphNode node = queue.remove();
+            HttpDownloadTask task = new HttpDownloadTask(node, configure);
+            pool.execute(task);
+        }
+        System.exit(0);
+    }
+
+
+
+
 
     private void version() {
 
@@ -102,9 +121,9 @@ public class DefaultTask {
         System.out.println("\tdefaultTask (FILE|DATA) [option] \t");
         System.out.println("\t[option]: DATA\t\t only download data");
         System.out.println("\t\t-h                   \t\thelp manual.");
-        System.out.println("\t\t--thredPool-size=SIZE\t\tsize of thread pool.");
-        System.out.println("\t\t--thredNum-size=SIZE\t\tsize of thread.");
-        System.out.println("\t\t--queue-size=SIZE\t\tsize of queue.");
+//        System.out.println("\t\t--thredPool-size=SIZE\t\tsize of thread pool.");
+//        System.out.println("\t\t--thredNum-size=SIZE\t\tsize of thread.");
+//        System.out.println("\t\t--queue-size=SIZE\t\tsize of queue.");
         System.out.println("\t[option]: FILE\t\t file download");
         System.out.println("\t\t--download-dir=DIR\t\tthe dir which store download files.");
         System.out.println("\t\t--download-type=TYPE\t\tthe type of will download.");
